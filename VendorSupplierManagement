@@ -1,0 +1,93 @@
+import java.util.*;
+
+class Supplier {
+    int id;
+    String name, company, contact;
+    double totalSupply;
+
+    Supplier(int id, String name, String company, String contact) {
+        this.id = id;
+        this.name = name;
+        this.company = company;
+        this.contact = contact;
+        this.totalSupply = 0.0;
+    }
+
+    void addSupply(double amount) {
+        totalSupply += amount;
+    }
+
+    void display() {
+        System.out.printf("%-5d %-15s %-15s %-15s %-10.2f\n", id, name, company, contact, totalSupply);
+    }
+}
+
+public class VendorSupplierManagement {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        Map<Integer, Supplier> suppliers = new LinkedHashMap<>();
+
+        while (true) {
+            System.out.println("\n===== VENDOR & SUPPLIER MANAGEMENT =====");
+            System.out.println("1. Add Supplier");
+            System.out.println("2. Record Supply");
+            System.out.println("3. View All Suppliers");
+            System.out.println("4. Generate Report");
+            System.out.println("5. Exit");
+            System.out.print("Enter choice: ");
+            int choice = sc.nextInt();
+
+            switch (choice) {
+                case 1:
+                    System.out.print("Enter Supplier ID: ");
+                    int id = sc.nextInt();
+                    sc.nextLine();
+                    System.out.print("Enter Name: ");
+                    String name = sc.nextLine();
+                    System.out.print("Enter Company: ");
+                    String company = sc.nextLine();
+                    System.out.print("Enter Contact: ");
+                    String contact = sc.nextLine();
+                    suppliers.put(id, new Supplier(id, name, company, contact));
+                    System.out.println("Supplier added successfully!");
+                    break;
+
+                case 2:
+                    System.out.print("Enter Supplier ID: ");
+                    int sid = sc.nextInt();
+                    if (suppliers.containsKey(sid)) {
+                        System.out.print("Enter Supply Amount: ");
+                        double amt = sc.nextDouble();
+                        suppliers.get(sid).addSupply(amt);
+                        System.out.println("Supply recorded successfully!");
+                    } else {
+                        System.out.println("Supplier not found!");
+                    }
+                    break;
+
+                case 3:
+                    System.out.println("\nID   Name            Company         Contact         Total Supply");
+                    System.out.println("---------------------------------------------------------------");
+                    for (Supplier s : suppliers.values()) s.display();
+                    break;
+
+                case 4:
+                    double total = 0;
+                    for (Supplier s : suppliers.values()) total += s.totalSupply;
+                    System.out.println("\n===== SUPPLIER REPORT =====");
+                    System.out.printf("Total Suppliers: %d\n", suppliers.size());
+                    System.out.printf("Total Supply Value: %.2f\n", total);
+                    break;
+
+                case 5:
+                    System.out.println("Thank you for using Vendor and Supplier Management System!");
+                    sc.close();
+                    System.exit(0);
+                    break;
+
+                default:
+                    System.out.println("Invalid choice! Try again.");
+            }
+        }
+    }
+}
