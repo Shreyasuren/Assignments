@@ -1,0 +1,55 @@
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+
+public class ConfirmDialogExample {
+
+    public static void main(String[] args) {
+
+        JFrame frame = new JFrame("Confirmation Dialog Demo");
+        frame.setSize(300, 200);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setLayout(new FlowLayout());
+
+        JButton btn = new JButton("Perform Action");
+
+        btn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                // JDialog creation
+                JDialog dialog = new JDialog(frame, "Confirm Action", true);
+                dialog.setSize(250, 150);
+                dialog.setLayout(new FlowLayout());
+
+                JLabel label = new JLabel("Are you sure you want to continue?");
+                JButton yesBtn = new JButton("Yes");
+                JButton noBtn = new JButton("No");
+
+                yesBtn.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        System.out.println("Action Performed!");
+                        dialog.dispose();
+                    }
+                });
+
+                noBtn.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        dialog.dispose();
+                    }
+                });
+
+                dialog.add(label);
+                dialog.add(yesBtn);
+                dialog.add(noBtn);
+                dialog.setLocationRelativeTo(frame);
+                dialog.setVisible(true);
+            }
+        });
+
+        frame.add(btn);
+        frame.setVisible(true);
+    }
+}
